@@ -1,0 +1,9 @@
+# action.yml
+name: 'Hello World'
+description: 'Greet someone and record the time'
+outputs:
+  sha: # id of output
+    description: 'The github sha that was run against'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
