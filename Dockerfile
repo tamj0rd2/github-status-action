@@ -9,4 +9,12 @@ WORKDIR /repo
 COPY . .
 RUN go mod vendor
 
-ENTRYPOINT ["go", "run", "./cmd/githubstatus/"]
+RUN go build -mod vendor -o githubstatus ./cmd/githubstatus/*.go
+
+FROM scratch
+
+WORKDIR /root/
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=build /repo/githubstatus ./githubstatus
+
+CMD ["./githubstatus"]
