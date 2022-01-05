@@ -3,6 +3,6 @@ services:
   start:
     build: .
     environment:
-      - GITHUB_TOKEN
-      - GITHUB_SHA
-      - SLACK_WEBHOOK
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - GITHUB_SHA=${GITHUB_SHA}
+      - SLACK_WEBHOOK=${SLACK_WEBHOOK}

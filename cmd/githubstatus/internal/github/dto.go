@@ -14,9 +14,9 @@ type status struct {
 	Context     string `json:"context"`
 }
 
-func (res CommitStatusesResponse) isStepComplete(step step, sha string) (isComplete bool, failure error) {
+func (res CommitStatusesResponse) isStepComplete(step string, sha string) (isComplete bool, failure error) {
 	for _, status := range res {
-		if status.Context != string(step) {
+		if status.Context != step {
 			continue
 		}
 

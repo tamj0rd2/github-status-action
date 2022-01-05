@@ -2,8 +2,10 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/tamj0rd2/github-status-action/cmd/githubstatus/internal/github"
@@ -27,10 +29,21 @@ func main() {
 		log.Fatal("SLACK_WEBHOOK not set")
 	}
 
+	if len(os.Args) < 2 {
+		log.Fatal("Did you forget to supply a steps input?")
+	}
+
+	steps := strings.Split(os.Args[1], ",")
+	for i, step := range steps {
+		steps[i] = strings.TrimSpace(step)
+	}
+
+	fmt.Println("steps to check", steps)
+
 	githubService := github.NewService(githubToken)
 	slackService := slack.NewService(slackURL)
 
-	if err := githubService.WaitForChecksToSucceed(sha, time.Minute*20); err != nil {
+	if err := githubService.WaitForStepsToSucceed(sha, steps, time.Minute*20); err != nil {
 		helpers.PrintErr(err)
 
 		var errStepFailed github.ErrStepFailed

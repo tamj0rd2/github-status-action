@@ -6,7 +6,7 @@ import (
 )
 
 type ErrStepFailed struct {
-	Step        step
+	Step        string
 	CommitURL   string
 	PipelineURL string
 }

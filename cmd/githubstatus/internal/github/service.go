@@ -17,10 +17,9 @@ func NewService(githubToken string) *Service {
 	}
 }
 
-func (s *Service) WaitForChecksToSucceed(sha string, totalTimeout time.Duration) error {
+func (s *Service) WaitForStepsToSucceed(sha string, steps []string, totalTimeout time.Duration) error {
 	helpers.PrintlnWithColour(fmt.Sprintf("Waiting for statuses for commit %q to finish", sha), helpers.ColourBlue)
-	progress := checksProgress{
-	}
+	progress := newStepsProgress(steps)
 
 	timeToWait := time.Second * 10
 	attempts := int(totalTimeout / timeToWait)
@@ -54,9 +53,17 @@ func (s *Service) WaitForChecksToSucceed(sha string, totalTimeout time.Duration)
 	return ErrTimedOut
 }
 
-type checksProgress map[step]bool
+type stepsProgress map[string]bool
 
-func (c checksProgress) Update(step step, isComplete bool) {
+func newStepsProgress(steps []string) stepsProgress {
+	progress := stepsProgress{}
+	for _, step := range steps {
+		progress[step] = false
+	}
+	return progress
+}
+
+func (c stepsProgress) Update(step string, isComplete bool) {
 	c[step] = isComplete
 
 	if isComplete {
@@ -66,7 +73,7 @@ func (c checksProgress) Update(step step, isComplete bool) {
 	}
 }
 
-func (c checksProgress) AreAllComplete() bool {
+func (c stepsProgress) AreAllComplete() bool {
 	for _, isComplete := range c {
 		if !isComplete {
 			return false
