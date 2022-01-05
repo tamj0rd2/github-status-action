@@ -1,0 +1,19 @@
+# macos
+.DS_Store
+# coverage output
+*.out
+# vendor deps
+vendor/
+# IntelliJ
+.idea
+# Visual Studio Code
+.vscode
+docker-compose.override.yaml
+
+# Real secrets
+real_secrets.yaml
+real_slack_secrets.yaml
+real_gmd_secrets.yaml
+realmpassecrets.yaml
+
+doc/architecture/flows/http-client.private.env.json
