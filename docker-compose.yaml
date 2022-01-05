@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  start:
+    build: .
+    environment:
+      - GITHUB_TOKEN
+      - GITHUB_SHA
+      - SLACK_WEBHOOK

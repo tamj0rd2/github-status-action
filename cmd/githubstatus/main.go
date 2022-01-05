@@ -22,9 +22,9 @@ func main() {
 		log.Fatal("GITHUB_SHA not set")
 	}
 
-	slackURL := os.Getenv("SLACK_URL")
+	slackURL := os.Getenv("SLACK_WEBHOOK")
 	if slackURL == "" {
-		log.Fatal("SLACK_URL not set")
+		log.Fatal("SLACK_WEBHOOK not set")
 	}
 
 	githubService := github.NewService(githubToken)

@@ -20,8 +20,6 @@ func NewService(githubToken string) *Service {
 func (s *Service) WaitForChecksToSucceed(sha string, totalTimeout time.Duration) error {
 	helpers.PrintlnWithColour(fmt.Sprintf("Waiting for statuses for commit %q to finish", sha), helpers.ColourBlue)
 	progress := checksProgress{
-		StepPipegen: false,
-		StepCI:      false,
 	}
 
 	timeToWait := time.Second * 10
